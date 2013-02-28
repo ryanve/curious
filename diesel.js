@@ -1,5 +1,5 @@
 /*!
- * diesel
+ * diesel       Typechecking module
  * @author      Ryan Van Etten <@ryanve>
  * @link        github.com/ryanve/diesel
  * @license     MIT
@@ -12,7 +12,7 @@
     else root[name] = definition();
 }(this, 'diesel', function() {
 
-    var d = {}
+    var d = {} // diesel
       , root = this
       , win = window
       , types = /function|object|string|number|boolean|undefined/
@@ -20,9 +20,13 @@
       , toString = d.toString;
 
     /**
-     * @param  {*}      item
-     * @param  {string} type
-     * @return {boolean}
+     * @param   {*}      item    item to test
+     * @param   {string} type    case-sensitive type to test for
+     * @return  {boolean}
+     *
+     * @example is(item, 'object')  # true for typeof "object"
+     * @example is(item, 'Object')  # true for [object Object]
+     * @example is(item, 'null')    # true if item === null
      */
     function is(item, type) {
         if (typeof item === type) return true; // object|function|undefined|number|boolean|string
@@ -32,8 +36,9 @@
     d['is'] = is;
 
     /**
-     * @param  {string|*}  type
-     * @param  {boolean=}  inv
+     * @param  {(string|*)=} type  is a type to test for via is()
+     *                             OR a value to compare directly
+     * @param  {boolean=}    inv   use true to invert the test
      * @return {Function}
      */
     function automateIs(type, inv) {
@@ -78,6 +83,7 @@
     d['isNaN'] = is['nan'] = automateIs(+{});
     
     // ~ underscorejs.org
+    // debating on whether or not to expose all of these
     d['isRegExp'] = is['RegExp'] = is['reg'] = automateIs('RegExp');
     //d['isNull'] = automateIs(null);
     //d['isBoolean'] = automateIs('Boolean');
