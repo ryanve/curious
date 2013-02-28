@@ -1,0 +1,13 @@
+{
+    "name": "diesel",
+    "description": "Typechecking module.",
+    "version": "0.2.0",
+    "homepage": "https://github.com/ryanve/diesel",
+    "author": "Ryan Van Etten <ryanve@gmail.com> (http://ryanve.com)",
+    "keywords": ["utility", "typechecking", "type", "ender"],
+    "main": "./diesel.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ryanve/diesel.git"
+    }
+}
