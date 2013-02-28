@@ -3,7 +3,7 @@
  * @author      Ryan Van Etten <@ryanve>
  * @link        github.com/ryanve/diesel
  * @license     MIT
- * @version     0.2.0
+ * @version     0.2.1
  */
 
 (function(root, name, definition) {
@@ -171,9 +171,9 @@
             return false; 
         if (a === b ? a === a : a !== a && b !== b)
             return true; 
-        if (!a || !b || toString.call(a) != toString.call(b))
+        if (!a || !b || toString.call(a) !== toString.call(b))
             return false; 
-        if (t != 'object' && t != 'function')
+        if ('object' != t && 'function' != t)
             return false; 
         for (t in a)
             if (!isEqual(a[t], b[t]))
