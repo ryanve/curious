@@ -3,7 +3,7 @@
  * @author      Ryan Van Etten <@ryanve>
  * @link        github.com/ryanve/curious
  * @license     MIT
- * @version     0.3.0
+ * @version     0.3.1
  */
 
 (function(root, name, definition) {
@@ -136,17 +136,9 @@
      * @return  {number|boolean}
      */
     function count(o) {
-        if (typeof o != 'object' || !o || o.nodeType || o === win)
-            return false
-        return typeof (o = o.length) == 'number' && o === o ? o : false
+        if (typeof o != 'object' || !o || o.nodeType || o === win) return false;
+        return typeof (o = o.length) == 'number' && o === o ? o : false;
     }
-    
-    function isIndexed(o) {
-        if (typeof o == 'object' ? !o || o.nodeType || o === win : typeof o != 'string')
-            return false;
-        return typeof (o = o.length) == 'number' && o === o;
-    }
-    //xports['isIndexed'] = isIndexed;
   
     /**
      * @return {*}  o
@@ -158,11 +150,9 @@
         if (typeof o != 'object')
             return '' === o;
         // hmm 
-        if (0 === o.length)
-            return o !== win;
+        if (0 === o.length) return o !== win;
          // vs: 
-         // if (isArray(o) || isArguments(o))
-         //   return !o.length;
+         // if (isArray(o) || isArguments(o)) return !o.length;
         for (var k in o)
             if (owns.call(o, k))
               return false;
@@ -177,17 +167,12 @@
      */
     function isEqual(a, b) {
         var t = typeof a;
-        if (t != typeof b || (a ? !b : b))
-            return false; 
-        if (a === b ? a === a : a !== a && b !== b)
-            return true; 
-        if (!a || !b || toString.call(a) !== toString.call(b))
-            return false; 
-        if ('object' != t && 'function' != t)
-            return false; 
-        for (t in a)
-            if (!isEqual(a[t], b[t]))
-                return false;
+        if (a ? !b : b) return false;
+        if (t != typeof b) return false; 
+        if (it(a, b)) return true;
+        if (!a || !b || toString.call(a) !== toString.call(b)) return false; 
+        if ('object' != t && 'function' != t) return false; 
+        for (t in a) if (!isEqual(a[t], b[t])) return false;
         return isEqual(+a, +b);
     }
     xports['isEqual'] = is['eq'] = isEqual;
