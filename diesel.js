@@ -3,12 +3,11 @@
  * @author      Ryan Van Etten <@ryanve>
  * @link        github.com/ryanve/diesel
  * @license     MIT
- * @version     0.2.1
+ * @version     0.2.2
  */
 
 (function(root, name, definition) {
-    if (typeof module != 'undefined' && module['exports'])
-        module['exports'] = definition(); 
+    if (typeof module != 'undefined' && module['exports']) module['exports'] = definition(); 
     else root[name] = definition();
 }(this, 'diesel', function() {
 
@@ -23,7 +22,6 @@
      * @param   {*}      item    item to test
      * @param   {string} type    case-sensitive type to test for
      * @return  {boolean}
-     *
      * @example is(item, 'object')  # true for typeof "object"
      * @example is(item, 'Object')  # true for [object Object]
      * @example is(item, 'null')    # true if item === null
@@ -36,23 +34,29 @@
     d['is'] = is;
 
     /**
-     * @param  {(string|*)=} type  is a type to test for via is()
-     *                             OR a value to compare directly
-     * @param  {boolean=}    inv   use true to invert the test
+     * @param  {*}  a
+     * @param  {*=} b
+     * @return {boolean}
+     */
+    function it(a, b) {
+        // Emulate ES6 Object.is
+        return a === b ? (0 !== a || 1/a === 1/b) : a !== a && b !== b;
+    }
+
+    /**
+     * @param  {(string|*)=} type  a string type to test via `is` OR a value to compare.
+     * @param  {boolean=}    inv   Invert the test by setting `inv` to `true`.
      * @return {Function}
      */
     function automateIs(type, inv) {
         inv = true === inv;
-        if (typeof type == 'string' && type) {
-            return (types.test(type)
-                ? function(o) { return inv != (typeof o === type); }
-                : function(o) { return inv != is(o, type); }
-            );
-        }
-        return ((type === type) == inv
-            ? function(o) { return (o !== o) == inv; }
-            : function(o) { return (o === o) == inv; }
-        );
+        return typeof type == 'string' ? types.test(type) ? function(o) {
+            return (typeof o === type) != inv; 
+        } : function(o) {
+            return is(o, type) != inv; 
+        } : function(o) {
+            return it(o, type) != inv;
+        };
     }
     is['automate'] = automateIs;
 
@@ -189,5 +193,4 @@
     d['isEqual'] = is['eq'] = isEqual;
 
     return d;
-
 }));
