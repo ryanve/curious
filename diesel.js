@@ -1,17 +1,17 @@
 /*!
- * diesel       Typechecking module
+ * curious      Typechecking module
  * @author      Ryan Van Etten <@ryanve>
- * @link        github.com/ryanve/diesel
+ * @link        github.com/ryanve/curious
  * @license     MIT
- * @version     0.2.2
+ * @version     0.3.0
  */
 
 (function(root, name, definition) {
     if (typeof module != 'undefined' && module['exports']) module['exports'] = definition(); 
     else root[name] = definition();
-}(this, 'diesel', function() {
+}(this, 'curious', function() {
 
-    var d = {} // diesel
+    var d = {} // exports
       , root = this
       , win = window
       , types = /function|object|string|number|boolean|undefined/

@@ -1,8 +1,7 @@
-[diesel](https://github.com/ryanve/diesel)
-=====
+# [curious](../../)
 
-Typechecking module
+<b>curious</b> (formerly diesel) is a typechecking module.
 
 ```
-$ npm install diesel
+$ npm install curious
 ```

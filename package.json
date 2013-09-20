@@ -1,13 +1,13 @@
 {
-    "name": "diesel",
+    "name": "curious",
     "description": "Typechecking module.",
-    "version": "0.2.2",
-    "homepage": "https://github.com/ryanve/diesel",
+    "version": "0.3.0",
+    "homepage": "https://github.com/ryanve/curious",
     "author": "Ryan Van Etten <ryanve@gmail.com> (http://ryanve.com)",
     "keywords": ["utility", "typechecking", "type", "ender"],
-    "main": "./diesel.js",
+    "main": "./curious.js",
     "repository": {
         "type": "git",
-        "url": "https://github.com/ryanve/diesel.git"
+        "url": "https://github.com/ryanve/curious.git"
     }
 }
