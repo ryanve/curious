@@ -3,7 +3,7 @@
  * @author      Ryan Van Etten <@ryanve>
  * @link        github.com/ryanve/curious
  * @license     MIT
- * @version     0.3.1
+ * @version     0.4.0
  */
 
 (function(root, name, definition) {
@@ -12,8 +12,7 @@
 }(this, 'curious', function() {
 
     var xports = {}
-      , root = this
-      , win = window
+      , globe = (function() { return this; }())
       , types = /function|object|string|number|boolean|undefined/
       , owns = xports.hasOwnProperty
       , toString = xports.toString;
@@ -59,14 +58,19 @@
         };
     }
     is['automate'] = automateIs;
+    
+    function isWindow(o) {
+        return null != o && o == o.window;
+    }
+    xports['isWindow'] = isWindow;
+    xports['isGlobe'] = automateIs(globe);
 
     // Use the native isArray when available.
     var isArray = xports['isArray'] = is['Array'] = Array.isArray || automateIs('Array');
 
-    // is(item, 'Object') tests exactly for [object Object]
-    // In modern browsers, that excludes the window. Ensure:
-    var isObject = xports['isObject'] = is['Object'] = is(win, 'Object') ? function(item) {
-        return item !== win && is(item, 'Object');
+    // In modern browsers, `window` is not [object Object]. Normalize that.
+    xports['isObject'] = is['Object'] = isWindow(globe) && is(globe, 'Object') ? function(item) {
+        return !isWindow(item) && is(item, 'Object');
     } : automateIs('Object');
     
     var isArguments = xports['isArguments'] = is['Arguments'] = !is(arguments, 'Arguments') ? function(item) {
@@ -95,14 +99,9 @@
     //xports['isDate'] = automateIs('Date');
     //xports['isFunction'] = automateIs('Function');
 
-    //is['root'] = automateIs(root);
-    //is['noise'] = function (o) { 
-    //    return o == null || o !== o; 
-    //};
-
-    function isRealNumber(o) {// "number" and finite
-        return o ? typeof o == 'number' && o > (o - 1) : 0 === o; 
-    }
+    //function isRealNumber(o) {// "number" and finite
+    //    return o ? typeof o == 'number' && o > (o - 1) : 0 === o; 
+    //}
     //is['real'] = isRealNumber;
 
     /**
@@ -133,32 +132,28 @@
     //xports['has'] = has;
     
     /**
-     * @return  {number|boolean}
+     * @return {boolean}
      */
-    function count(o) {
-        if (typeof o != 'object' || !o || o.nodeType || o === win) return false;
-        return typeof (o = o.length) == 'number' && o === o ? o : false;
+    function isStack(o) {
+        return !!o && typeof o == 'object' && !o.nodeType && o.length === +o.length && o != o.window;
+    }
+  
+    /**
+     * @return {boolean}
+     */
+    function hasEnums(o) {
+        for (var k in o) 
+            if (owns.call(o, k)) return true;
+        return false;
     }
   
     /**
      * @return {*}  o
      * @return {boolean}
      */
-    function isEmpty(o) {
-        if (null == o)
-            return true;
-        if (typeof o != 'object')
-            return '' === o;
-        // hmm 
-        if (0 === o.length) return o !== win;
-         // vs: 
-         // if (isArray(o) || isArguments(o)) return !o.length;
-        for (var k in o)
-            if (owns.call(o, k))
-              return false;
-        return true;
-    }
-    xports['isEmpty'] = is['emp'] = isEmpty;
+    xports['isEmpty'] = is['emp'] = function(o) {
+        return '' === o || null == o || (isArray(o) ? 0 === o.length : !hasEnums(o));
+    };
     
     /**
      * @param  {*}  a

@@ -1,7 +1,7 @@
 {
     "name": "curious",
     "description": "Typechecking module.",
-    "version": "0.3.1",
+    "version": "0.4.0",
     "homepage": "https://github.com/ryanve/curious",
     "author": "Ryan Van Etten <ryanve@gmail.com> (http://ryanve.com)",
     "keywords": ["utility", "typechecking", "type", "ender"],
