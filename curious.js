@@ -11,12 +11,12 @@
     else root[name] = definition();
 }(this, 'curious', function() {
 
-    var d = {} // exports
+    var xports = {}
       , root = this
       , win = window
       , types = /function|object|string|number|boolean|undefined/
-      , owns = d.hasOwnProperty
-      , toString = d.toString;
+      , owns = xports.hasOwnProperty
+      , toString = xports.toString;
 
     /**
      * @param   {*}      item    item to test
@@ -31,7 +31,7 @@
         if (null == item || item !== item) return ('' + item) === type; // null|undefined|NaN
         return ('[object ' + type + ']') === toString.call(item); // Object|Array|RegExp|Date|...
     }
-    d['is'] = is;
+    xports['is'] = is;
 
     /**
      * @param  {*}  a
@@ -61,15 +61,15 @@
     is['automate'] = automateIs;
 
     // Use the native isArray when available.
-    var isArray = d['isArray'] = is['Array'] = Array.isArray || automateIs('Array');
+    var isArray = xports['isArray'] = is['Array'] = Array.isArray || automateIs('Array');
 
     // is(item, 'Object') tests exactly for [object Object]
     // In modern browsers, that excludes the window. Ensure:
-    var isObject = d['isObject'] = is['Object'] = is(win, 'Object') ? function(item) {
+    var isObject = xports['isObject'] = is['Object'] = is(win, 'Object') ? function(item) {
         return item !== win && is(item, 'Object');
     } : automateIs('Object');
     
-    var isArguments = d['isArguments'] = is['Arguments'] = !is(arguments, 'Arguments') ? function(item) {
+    var isArguments = xports['isArguments'] = is['Arguments'] = !is(arguments, 'Arguments') ? function(item) {
         return !!(item && owns.call(item, 'callee'));
     } : automateIs('Arguments');
     
@@ -78,22 +78,22 @@
     is['obj'] = automateIs('object');
     is['num'] = automateIs('number');
     is['str'] = automateIs('string');
-    is['fun'] = d['isFunction'] = automateIs('function');
-    //is['und'] = d['isUndefined'] = automateIs();
+    is['fun'] = xports['isFunction'] = automateIs('function');
+    //is['und'] = xports['isUndefined'] = automateIs();
     is['und'] = automateIs();
     is['def'] = automateIs(void 0, true);
     
     // + oper coerces funcs and plain objs to NaN 
-    d['isNaN'] = is['nan'] = automateIs(+{});
+    xports['isNaN'] = is['nan'] = automateIs(+{});
     
     // ~ underscorejs.org
     // debating on whether or not to expose all of these
-    d['isRegExp'] = is['RegExp'] = is['reg'] = automateIs('RegExp');
-    //d['isNull'] = automateIs(null);
-    //d['isBoolean'] = automateIs('Boolean');
-    //d['isString'] = automateIs('String');
-    //d['isDate'] = automateIs('Date');
-    //d['isFunction'] = automateIs('Function');
+    xports['isRegExp'] = is['RegExp'] = is['reg'] = automateIs('RegExp');
+    //xports['isNull'] = automateIs(null);
+    //xports['isBoolean'] = automateIs('Boolean');
+    //xports['isString'] = automateIs('String');
+    //xports['isDate'] = automateIs('Date');
+    //xports['isFunction'] = automateIs('Function');
 
     //is['root'] = automateIs(root);
     //is['noise'] = function (o) { 
@@ -111,7 +111,7 @@
     function isNode(o) {
         return !!o && o.nodeType || false;
     }
-    d['isNode'] = is['node'] = isNode;
+    xports['isNode'] = is['node'] = isNode;
     
     function automateNode(n) {
         if (!(n > 0)) { throw new TypeError; }
@@ -120,7 +120,7 @@
         };
     }
     isNode['automate'] = automateNode;
-    d['isElement'] = is['elem'] = automateNode(1);
+    xports['isElement'] = is['elem'] = automateNode(1);
     
     /**
      * @param  {*} o
@@ -130,7 +130,7 @@
     function has(o, k) {
         return owns.call(o, k);
     }
-    //d['has'] = has;
+    //xports['has'] = has;
     
     /**
      * @return  {number|boolean}
@@ -146,7 +146,7 @@
             return false;
         return typeof (o = o.length) == 'number' && o === o;
     }
-    //d['isIndexed'] = isIndexed;
+    //xports['isIndexed'] = isIndexed;
   
     /**
      * @return {*}  o
@@ -168,7 +168,7 @@
               return false;
         return true;
     }
-    d['isEmpty'] = is['emp'] = isEmpty;
+    xports['isEmpty'] = is['emp'] = isEmpty;
     
     /**
      * @param  {*}  a
@@ -190,7 +190,7 @@
                 return false;
         return isEqual(+a, +b);
     }
-    d['isEqual'] = is['eq'] = isEqual;
+    xports['isEqual'] = is['eq'] = isEqual;
 
-    return d;
+    return xports;
 }));
