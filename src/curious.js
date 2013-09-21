@@ -1,13 +1,13 @@
 /*!
- * curious 0.5.0+201309210304
- * https://github.com/ryanve/curious
- * MIT License 2013 Ryan Van Etten
+ * <%= pkg.name %> <%= pkg.version %>+<%= grunt.template.today("UTC:yyyymmddHHMM") %>
+ * <%= pkg.homepage %>
+ * <%= pkg.license %> License <%= grunt.template.today("UTC:yyyy") %> <%= pkg.author %>
  */
 
 !function(root, name, make) {
     if (typeof module != 'undefined' && module['exports']) module['exports'] = make.call(root);
     else root[name] = make.call(root);
-}(this, 'curious', function() {
+}(this, '<%= pkg.name %>', function() {
 
     var xports = {}
       , globe = (function() { return this; }())

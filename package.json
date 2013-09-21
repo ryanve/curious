@@ -1,13 +1,21 @@
 {
     "name": "curious",
     "description": "Typechecking module.",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "homepage": "https://github.com/ryanve/curious",
-    "author": "Ryan Van Etten <ryanve@gmail.com> (http://ryanve.com)",
+    "license": "MIT",
+    "author": "Ryan Van Etten",
     "keywords": ["utility", "typechecking", "type", "ender"],
     "main": "./curious.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/ryanve/curious.git"
+    },
+    "devDependencies": {
+        "grunt": "~0.4.1",
+        "grunt-contrib-uglify": "~0.2.4",
+        "grunt-contrib-concat": "~0.3.0",
+        "grunt-contrib-jshint": "~0.6.4",
+        "aok": "~1.3"
     }
 }

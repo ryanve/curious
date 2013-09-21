@@ -1,0 +1,17 @@
+{
+    "name": "curious",
+    "repo": "ryanve/curious",
+    "description": "Typechecking module.",
+    "version": "0.5.0",
+    "main": "./curious.js",
+    "scripts": [
+        "./curious.js"
+    ],
+    "keywords": [
+        "utility",
+        "typechecking",
+        "type",
+        "ender"
+    ],
+    "license": "MIT"
+}
