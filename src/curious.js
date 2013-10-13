@@ -106,7 +106,7 @@
      * @return {number|boolean}
      */
     function isNode(o) {
-        return !!o && o.nodeType || false;
+        return o && o.nodeType || false;
     }
     xports['isNode'] = is['node'] = isNode;
     
